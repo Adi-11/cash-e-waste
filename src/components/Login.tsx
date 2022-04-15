@@ -74,145 +74,157 @@ export const Login: React.FC<LoginProps> = ({}) => {
   };
 
   return (
-    <div className="container h-[70vh] mt-32 mx-auto shadow-2xl shadow-slate-500 bg-white rounded-md flex items-center justify-center">
-      <div className="flex-[0.5] h-full bg-primary rounded-tl-md rounded-bl-md p-4">
-        <div
-          className={
-            "flex items-center justify-center flex-col min-h-full h-3/4 w-3/4 m-auto"
-          }
-        >
-          <p className="text-accent mt-4 text-3xl font-extrabold ">
-            Cash-e-Waste
-          </p>
-          <Lottie
-            options={{
-              loop: true,
-              autoplay: true,
-              animationData: require(`../assets/login.json`),
-            }}
-          />
+    <div className="h-screen flex items-center justify-center">
+      <div className="shadow-2xl shadow-slate-500 rounded-md py-8 m-auto flex items-center justify-center w-3/4 login-bg">
+        <div className="flex-[0.5] h-full rounded-tl-md rounded-bl-md p-4">
+          <div
+            className={
+              "flex items-center justify-center flex-col h-full w-3/4 m-auto"
+            }
+          >
+            <p className="text-accent mt-4 text-3xl font-extrabold ">
+              Cash-e-Waste
+            </p>
+            <Lottie
+              options={{
+                loop: true,
+                autoplay: true,
+                animationData: require(`../assets/login.json`),
+              }}
+            />
+          </div>
         </div>
-      </div>
-      <div className="flex-[0.5] p-4 relative">
-        <div className="w-full h-full">
-          {forLogin ? (
-            <div className="text-center">
-              <p className="font-bold text-3xl">Welcome Back</p>
-              <p className={"text-lg text-semibold"}>Sign In to your account</p>
-            </div>
-          ) : (
-            <div className="text-center">
-              <p className="font-bold text-3xl">Welcome to Cash-e-Waste</p>
-              <p className={"text-lg text-semibold"}>Sign Up for new user</p>
-            </div>
-          )}
-
-          <div className="m-auto w-3/4">
-            <div
-              className={
-                "feild w-full flex items-start justify-center flex-col mb-6"
-              }
-            >
-              <div className={"w-4/5 mb-2"}>
-                <p>Email</p>
-              </div>
-              <input
-                className={
-                  "py-4 px-2 outline-none border border-black rounded-md text-black text-base w-full"
-                }
-                type="email"
-                name="email"
-                placeholder="Type in your email.."
-                required
-                onChange={onChange}
-                value={data.email}
-              />
-            </div>
-            <div
-              className={"feild w-full flex items-start justify-start flex-col"}
-            >
-              <div className={"w-4/5 mb-2"}>
-                <p>Password</p>
-              </div>
-              <input
-                className={
-                  "py-4 px-2 outline-none border border-black rounded-md text-black text-base w-full"
-                }
-                type="password"
-                name="password"
-                placeholder="Type in your password.."
-                required
-                onChange={onChange}
-                value={data.password}
-              />
-            </div>
+        <div className="flex-[0.5] p-4 relative">
+          <div className="w-full h-full">
             {forLogin ? (
+              <div className="text-center">
+                <p className="font-bold text-secondary-dark text-2xl">
+                  Welcome Back
+                </p>
+                <p className={"text-base opacity-80 text-semibold scale-90"}>
+                  Sign In to your account
+                </p>
+              </div>
+            ) : (
+              <div className="text-center">
+                <p className="font-bold text-2xl text-secondary-dark">
+                  Welcome to Cash-e-Waste
+                </p>
+                <p className={"text-base opacity-80 text-semibold scale-90"}>
+                  Sign Up for new user
+                </p>
+              </div>
+            )}
+
+            <div className="m-auto w-3/4">
+              <div
+                className={
+                  "feild w-full flex items-start justify-center flex-col mb-6"
+                }
+              >
+                <div className={"w-4/5 mb-2"}>
+                  <p>Email</p>
+                </div>
+                <input
+                  className={
+                    "py-[10px] px-2 outline-none border border-black rounded-md text-black text-base w-full"
+                  }
+                  type="email"
+                  name="email"
+                  placeholder="Type in your email.."
+                  required
+                  onChange={onChange}
+                  value={data.email}
+                />
+              </div>
+              <div
+                className={
+                  "feild w-full flex items-start justify-start flex-col"
+                }
+              >
+                <div className={"w-4/5 mb-2"}>
+                  <p>Password</p>
+                </div>
+                <input
+                  className={
+                    "py-[10px] px-2 outline-none border border-black rounded-md text-black text-base w-full"
+                  }
+                  type="password"
+                  name="password"
+                  placeholder="Type in your password.."
+                  required
+                  onChange={onChange}
+                  value={data.password}
+                />
+              </div>
+              {forLogin ? (
+                <button
+                  className={"btn"}
+                  onClick={() => handleLogin()}
+                  disabled={loading}
+                >
+                  Login
+                  {loading && (
+                    <CircularProgress
+                      size={20}
+                      color={"primary"}
+                      className={"loader"}
+                    />
+                  )}
+                </button>
+              ) : (
+                <button
+                  className={"btn"}
+                  onClick={() => handleRegister()}
+                  disabled={loading}
+                >
+                  Register
+                  {loading && (
+                    <CircularProgress
+                      size={20}
+                      color={"primary"}
+                      className={"loader"}
+                    />
+                  )}
+                </button>
+              )}
+            </div>
+            <div className="m-auto mt-6">
+              <Divider variant="inset" sx={{ borderBottomWidth: 2 }} />
+            </div>
+            <div className="m-auto w-3/4">
               <button
-                className={"btn"}
-                onClick={() => handleLogin()}
+                className={"btn-google"}
+                onClick={() => handleGoogleLogin()}
                 disabled={loading}
               >
-                Login
-                {loading && (
-                  <CircularProgress
-                    size={20}
-                    color={"primary"}
-                    className={"loader"}
-                  />
-                )}
+                Login with Google <FcGoogle size={25} className={"loader"} />
               </button>
-            ) : (
-              <button
-                className={"btn"}
-                onClick={() => handleRegister()}
-                disabled={loading}
-              >
-                Register
-                {loading && (
-                  <CircularProgress
-                    size={20}
-                    color={"primary"}
-                    className={"loader"}
-                  />
-                )}
-              </button>
-            )}
-          </div>
-          <div className="m-auto mt-6">
-            <Divider variant="inset" sx={{ borderBottomWidth: 2 }} />
-          </div>
-          <div className="m-auto w-3/4">
-            <button
-              className={"btn-google"}
-              onClick={() => handleGoogleLogin()}
-              disabled={loading}
-            >
-              Login with Google <FcGoogle size={25} className={"loader"} />
-            </button>
-          </div>
+            </div>
 
-          <div className="flex items-center justify-center mt-8 opacity-80">
-            {forLogin ? (
-              <p className="text-xl">
-                Don't have an account yet?{" "}
-                <span
-                  className="text-secondary-dark font-semibold hover:underline cursor-pointer"
-                  onClick={() => handleForLogin()}
-                >
-                  Sign up
-                </span>
-              </p>
-            ) : (
-              <p className="text-xl">
-                Already have an account?{" "}
-                <span
-                  className="text-secondary-dark font-semibold hover:underline cursor-pointer"
-                  onClick={() => handleForLogin()}
-                >
-                  Log In
-                </span>
-              </p>
-            )}
+            <div className="flex items-center justify-center mt-8 opacity-80">
+              {forLogin ? (
+                <p className="text-base">
+                  Don't have an account yet?{" "}
+                  <span
+                    className="text-secondary-dark font-semibold hover:underline cursor-pointer"
+                    onClick={() => handleForLogin()}
+                  >
+                    Sign up
+                  </span>
+                </p>
+              ) : (
+                <p className="text-base">
+                  Already have an account?{" "}
+                  <span
+                    className="text-secondary-dark font-semibold hover:underline cursor-pointer"
+                    onClick={() => handleForLogin()}
+                  >
+                    Log In
+                  </span>
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>
