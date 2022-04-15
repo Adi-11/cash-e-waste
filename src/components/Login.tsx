@@ -5,13 +5,15 @@ import { FcGoogle } from "react-icons/fc";
 import AuthContext from "../context/Authentication/Auth.provider";
 import { validateEmail } from "../Helpers/validations";
 import { useSnackbar } from "notistack";
+import { getAuth } from "firebase/auth";
+import { getApp } from "firebase/app";
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
-  const [forLogin, setForLogin] = useState<boolean>(true);
+  const [forLogin, setForLogin] = useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar();
-  const { loading, isAuthenticated, token, userSignup, userLogin } =
+  const { loading, userSignup, userLogin, googleLogin } =
     useContext<any>(AuthContext);
   const [data, setData] = useState<{
     email: string;
@@ -32,22 +34,43 @@ export const Login: React.FC<LoginProps> = ({}) => {
     });
   };
 
-  const handleLogin = () => {
-    if (data.email === "" || data.password === "") {
+  const verifyData = () => {
+    if (data.email === "" && data.password === "") {
       enqueueSnackbar("Please fill all the fields", { variant: "error" });
-      return;
+      return false;
     }
     if (data.password.length < 6) {
       enqueueSnackbar("Password must be at least 6 characters", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
     if (validateEmail(data.email) === null) {
       enqueueSnackbar("Please enter a valid email", { variant: "error" });
-      return;
+      return false;
     }
+
+    return true;
+  };
+
+  const handleLogin = () => {
+    if (verifyData()) {
+      const auth = getAuth(getApp());
+      userLogin(data, auth);
+    }
+  };
+
+  const handleRegister = () => {
+    if (verifyData()) {
+      const auth = getAuth(getApp());
+      userSignup(data, auth);
+    }
+  };
+
+  const handleGoogleLogin = () => {
+    const auth = getAuth(getApp());
+    googleLogin(auth);
   };
 
   return (
@@ -59,7 +82,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
           }
         >
           <p className="text-accent mt-4 text-3xl font-extrabold ">
-            Cash-E-Waste
+            Cash-e-Waste
           </p>
           <Lottie
             options={{
@@ -70,7 +93,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
           />
         </div>
       </div>
-      <div className="flex-[0.5] p-4">
+      <div className="flex-[0.5] p-4 relative">
         <div className="w-full h-full">
           {forLogin ? (
             <div className="text-center">
@@ -78,7 +101,10 @@ export const Login: React.FC<LoginProps> = ({}) => {
               <p className={"text-lg text-semibold"}>Sign In to your account</p>
             </div>
           ) : (
-            <></>
+            <div className="text-center">
+              <p className="font-bold text-3xl">Welcome to Cash-e-Waste</p>
+              <p className={"text-lg text-semibold"}>Sign Up for new user</p>
+            </div>
           )}
 
           <div className="m-auto w-3/4">
@@ -113,27 +139,44 @@ export const Login: React.FC<LoginProps> = ({}) => {
                   "py-4 px-2 outline-none border border-black rounded-md text-black text-base w-full"
                 }
                 type="password"
-                name="email"
+                name="password"
                 placeholder="Type in your password.."
                 required
                 onChange={onChange}
                 value={data.password}
               />
             </div>
-            <button
-              className={"btn"}
-              onClick={() => handleLogin()}
-              disabled={loading}
-            >
-              Login
-              {loading && (
-                <CircularProgress
-                  size={20}
-                  color={"primary"}
-                  className={"loader"}
-                />
-              )}
-            </button>
+            {forLogin ? (
+              <button
+                className={"btn"}
+                onClick={() => handleLogin()}
+                disabled={loading}
+              >
+                Login
+                {loading && (
+                  <CircularProgress
+                    size={20}
+                    color={"primary"}
+                    className={"loader"}
+                  />
+                )}
+              </button>
+            ) : (
+              <button
+                className={"btn"}
+                onClick={() => handleRegister()}
+                disabled={loading}
+              >
+                Register
+                {loading && (
+                  <CircularProgress
+                    size={20}
+                    color={"primary"}
+                    className={"loader"}
+                  />
+                )}
+              </button>
+            )}
           </div>
           <div className="m-auto mt-6">
             <Divider variant="inset" sx={{ borderBottomWidth: 2 }} />
@@ -141,11 +184,35 @@ export const Login: React.FC<LoginProps> = ({}) => {
           <div className="m-auto w-3/4">
             <button
               className={"btn-google"}
-              // onClick={() => handleLogin()}
-              // disabled={loading}
+              onClick={() => handleGoogleLogin()}
+              disabled={loading}
             >
               Login with Google <FcGoogle size={25} className={"loader"} />
             </button>
+          </div>
+
+          <div className="flex items-center justify-center mt-8 opacity-80">
+            {forLogin ? (
+              <p className="text-xl">
+                Don't have an account yet?{" "}
+                <span
+                  className="text-secondary-dark font-semibold hover:underline cursor-pointer"
+                  onClick={() => handleForLogin()}
+                >
+                  Sign up
+                </span>
+              </p>
+            ) : (
+              <p className="text-xl">
+                Already have an account?{" "}
+                <span
+                  className="text-secondary-dark font-semibold hover:underline cursor-pointer"
+                  onClick={() => handleForLogin()}
+                >
+                  Log In
+                </span>
+              </p>
+            )}
           </div>
         </div>
       </div>

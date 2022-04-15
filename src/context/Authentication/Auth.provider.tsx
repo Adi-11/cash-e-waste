@@ -8,7 +8,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   UserCredential,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
 
 export interface AuthStateType {
   isAuthenticated: boolean;
@@ -47,7 +51,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       })
       .catch((err) => {
         console.log({ err });
-        enqueueSnackbar("Something went wrong!", { variant: "error" });
+        enqueueSnackbar("User not found! Please enter valid credentials", {
+          variant: "error",
+        });
       });
   };
 
@@ -65,15 +71,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
   };
 
+  const googleLogin = async (auth: any) => {
+    await signInWithPopup(auth, provider)
+      .then((res) => {
+        const credential = GoogleAuthProvider.credentialFromResult(res);
+        const token = credential?.accessToken;
+        // The signed-in user info.
+        const user = res.user;
+        console.log({ res, token, user });
+        Login(token!);
+      })
+      .catch((err) => {
+        console.log({ err });
+        enqueueSnackbar("Something went wrong!", { variant: "error" });
+      });
+  };
+
   const handleFirebaseResponse = (res: UserCredential) => {
     res.user.getIdTokenResult().then(async (token) => {
       console.log(token.token);
-      await firebaseLogin(token.token);
+      await Login(token.token);
     });
   };
 
-  const firebaseLogin = async (token: string) => {
-    return fetch(`${backendUrl}/user/login`, {
+  const Login = async (token: string) => {
+    return fetch(`${backendUrl}/auth`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +105,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       .then((res) => res.json())
       .then((res) => {
         if (res.error) {
-          throw new Error(res.msg);
+          throw new Error(res.message);
         }
         localStorage.setItem("token", res.token);
         localStorage.setItem("user", JSON.stringify(res.user));
@@ -98,7 +120,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         navigate("/");
       })
       .catch((err) => {
-        enqueueSnackbar(err.msg, {
+        enqueueSnackbar(err.message, {
           variant: "error",
           autoHideDuration: 3000,
         });
@@ -112,6 +134,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           ...state,
           userLogin,
           userSignup,
+          googleLogin,
         } as any
       }
     >
