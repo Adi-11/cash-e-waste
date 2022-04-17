@@ -16,6 +16,13 @@ export const AuthReducer = (state: any, action: any) => {
         loading: false,
       };
 
+    case "USER_PROFILE":
+      return {
+        ...state,
+        user: action.payload.user,
+        loading: false,
+      };
+
     case "LOADING":
       return {
         ...state,

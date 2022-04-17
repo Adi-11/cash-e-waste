@@ -1,10 +1,9 @@
 import { useSnackbar } from "notistack";
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { backendUrl } from "../../config";
 import { AuthReducer } from "./Auth.reducer";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   UserCredential,
@@ -127,6 +126,38 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
   };
 
+  const getUserProfile = async () => {
+    return fetch(`${backendUrl}/users/me`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${state.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.err) {
+          throw new Error(res.message);
+        }
+        localStorage.setItem("user", JSON.stringify(res.user));
+        dispatch({
+          type: "LOGIN",
+          payload: { user: res.user },
+        });
+        enqueueSnackbar("Login successful", {
+          variant: "success",
+          autoHideDuration: 3000,
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        enqueueSnackbar(err.message, {
+          variant: "error",
+          autoHideDuration: 3000,
+        });
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={
@@ -135,6 +166,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           userLogin,
           userSignup,
           googleLogin,
+          getUserProfile,
         } as any
       }
     >
