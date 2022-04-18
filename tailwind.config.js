@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
+      extradark: "var(--color-bg)",
       button: "var(--color-button)",
       transparent: "transparent",
       primary: {

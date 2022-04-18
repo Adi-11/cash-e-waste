@@ -1,5 +1,5 @@
 import { useSnackbar } from "notistack";
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { backendUrl } from "../../config";
 import { AuthReducer } from "./Auth.reducer";
@@ -126,12 +126,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
   };
 
-  const getUserProfile = async () => {
+  const getUserProfile = async (token: string) => {
     return fetch(`${backendUrl}/users/me`, {
-      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${state.token}`,
+        Authorization: `${token}`,
       },
     })
       .then((res) => res.json())
@@ -144,11 +143,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           type: "LOGIN",
           payload: { user: res.user },
         });
-        enqueueSnackbar("Login successful", {
-          variant: "success",
-          autoHideDuration: 3000,
-        });
-        navigate("/");
       })
       .catch((err) => {
         enqueueSnackbar(err.message, {
@@ -157,6 +151,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         });
       });
   };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    dispatch({
+      type: "LOGOUT",
+    });
+    navigate("/");
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      getUserProfile(token);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -167,6 +177,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           userSignup,
           googleLogin,
           getUserProfile,
+          logout,
         } as any
       }
     >
