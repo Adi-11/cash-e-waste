@@ -12,10 +12,11 @@ interface WalletProviderProps {
 }
 
 export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
-  const { token } = useContext(AuthContext);
+  const { token, getUserProfile } = useContext<any>(AuthContext);
   const { enqueueSnackbar } = useSnackbar();
 
   const connectToNewWallet = async () => {
+    let phrase = null;
     await fetch(`${backendUrl}/users/connect`, {
       method: "POST",
       headers: {
@@ -28,10 +29,12 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
         if (res.error) {
           throw new Error(res.message);
         } else {
+          phrase = res.phrase;
           enqueueSnackbar("Wallet created successfully", {
             variant: "success",
             autoHideDuration: 3000,
           });
+          getUserProfile();
         }
       })
       .catch((err) => {
@@ -40,6 +43,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
           autoHideDuration: 3000,
         });
       });
+    return phrase;
   };
 
   const connectToExistingWallet = async (phrase: string) => {
@@ -63,6 +67,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
             variant: "success",
             autoHideDuration: 3000,
           });
+          getUserProfile();
         }
       })
       .catch((err) => {
@@ -90,6 +95,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
             variant: "success",
             autoHideDuration: 3000,
           });
+          getUserProfile();
         }
       })
       .catch((err) => {

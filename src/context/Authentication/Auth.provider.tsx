@@ -44,6 +44,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     data: { email: string; password: string },
     auth: any
   ) => {
+    dispatch({ type: "LOADING" });
     await signInWithEmailAndPassword(auth, data.email, data.password)
       .then((res) => {
         handleFirebaseResponse(res);
@@ -60,6 +61,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     data: { email: string; password: string },
     auth: any
   ) => {
+    dispatch({ type: "LOADING" });
     await createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((res) => {
         handleFirebaseResponse(res);
@@ -126,7 +128,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
   };
 
-  const getUserProfile = async (token: string) => {
+  const getUserProfile = async () => {
+    let token = localStorage.getItem("token");
+    dispatch({ type: "LOADING" });
     return fetch(`${backendUrl}/users/me`, {
       headers: {
         "Content-Type": "application/json",
@@ -140,8 +144,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
         localStorage.setItem("user", JSON.stringify(res.user));
         dispatch({
-          type: "LOGIN",
-          payload: { user: res.user },
+          type: "USER_PROFILE",
+          payload: { user: res.user, token },
         });
       })
       .catch((err) => {
@@ -164,7 +168,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      getUserProfile(token);
+      getUserProfile();
     }
   }, []);
 

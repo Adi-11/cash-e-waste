@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
 import { NavLink as Link } from "react-router-dom";
 import AuthContext from "../context/Authentication/Auth.provider";
+import ProfileMenu from "./ProfileMenu";
 
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
   const { isAuthenticated, user, logout } = useContext<any>(AuthContext);
   return (
-    <div className="h-9 px-14 py-8 w-full flex justify-end bg-primary shadow-sm rounded-b-sm fixed">
+    <div className="h-9 px-14 py-8 w-full flex justify-end bg-primary shadow-sm rounded-b-sm">
       <div className="flex justify-between items-center h-full w-full">
         <div className="flex items-center justify-between">
           <p className="text-accent text-3xl font-extrabold mr-6">
@@ -40,27 +41,10 @@ export const Header: React.FC<HeaderProps> = () => {
               <p className="text-lg text-white">
                 {user?.name ? user.name : user.email}
               </p>
-              <img
-                className="inline object-cover w-[3rem] h-[3rem] mx-4 rounded-full border border-black"
-                src={
-                  user.avatar
-                    ? user.avatar
-                    : `${process.env.REACT_APP_API_PROFILE_URL}${user._id}.svg`
-                }
-                alt="Profile avatar"
-              />
+              <ProfileMenu />
             </>
           )}
-          {isAuthenticated ? (
-            // logout button
-            <div
-              onClick={() => logout()}
-              title="logout"
-              className="flex items-center justify-center text-primary-100 text-base p-2 rounded-8  cursor-pointer"
-            >
-              <FaSignOutAlt size={20} color="white" />
-            </div>
-          ) : (
+          {!isAuthenticated && (
             // login button
             <Link to="/login">
               <button className={"btn-home"}>Login</button>
