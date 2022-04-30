@@ -80,7 +80,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // The signed-in user info.
         const user = res.user;
         console.log({ res, token, user });
-        Login(token!);
+        // Login(token!);
+        handleFirebaseResponse(res);
       })
       .catch((err) => {
         console.log({ err });
@@ -90,7 +91,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const handleFirebaseResponse = (res: UserCredential) => {
     res.user.getIdTokenResult().then(async (token) => {
-      console.log(token.token);
+      // console.log(token.token);
       await Login(token.token);
     });
   };
