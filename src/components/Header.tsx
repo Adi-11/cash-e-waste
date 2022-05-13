@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = () => {
               <button
                 className={"text-white text-md font-semibold cursor-pointer"}
               >
-                Add Items
+                Manage Items
               </button>
             </Link>
           )}

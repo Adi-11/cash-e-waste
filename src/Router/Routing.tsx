@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Admin } from "../components/Admin";
+import { Admin } from "../components/Admin/Admin";
 import CreateNewWallet from "../components/CreateNewWallet";
 import { Header } from "../components/Header";
 import { Home } from "../components/Home";

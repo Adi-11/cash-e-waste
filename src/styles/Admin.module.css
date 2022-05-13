@@ -1,0 +1,101 @@
+.bankContainer {
+  padding: 2rem;
+}
+
+.projects {
+  background-color: #273142;
+  border: 1px solid #313d4f;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.projectsInner {
+  border-radius: 4px;
+}
+
+.projectsHeader {
+  color: white;
+  padding: 22px;
+}
+
+.projectsHeader .count,
+.projectsHeader .title {
+  display: inline-block;
+}
+
+.projectsHeader .count {
+  color: #738297;
+}
+
+.projectsHeader .title {
+  font-size: 21px;
+}
+
+.projectsHeader .title + .count {
+  margin-left: 5px;
+}
+
+.projectsTable {
+  background: #273142;
+  width: 90%;
+}
+
+.projectsTable td,
+.projectsTable th {
+  color: white;
+  padding: 10px 22px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.projectsTable td p {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.projectsTable td p:last-of-type {
+  color: #ffffff;
+}
+
+.projectsTable th {
+  background-color: #313d4f;
+}
+
+.projectsTable tr:hover {
+  background-color: #303d52;
+}
+
+.projectsTable tr:not(:last-of-type) {
+  border-bottom: 1px solid #313d4f;
+}
+
+.member figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.member img {
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+}
+
+.center {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.space {
+  margin: 1rem;
+}
+
+.center > * {
+  cursor: pointer;
+}
+
+.containerTlbLoad {
+  position: absolute;
+}

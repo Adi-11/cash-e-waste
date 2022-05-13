@@ -167,3 +167,29 @@
   right: 50%;
   transform: translate(-50%, -50%);
 }
+.MuiPaper-root {
+  background-color: var(--color-darkwave) !important;
+}
+
+.btn-sm {
+  width: 20%;
+  height: 2.5rem;
+  cursor: pointer;
+  vertical-align: middle;
+  font-size: 0.8rem;
+  letter-spacing: 0.125rem;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  transition: color 0.25s ease, background-color 0.25s ease,
+    border-color 0.25s ease;
+  border: none;
+  color: var(--color-darkwave);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-button);
+}
+
+.btn-sm:hover {
+  background-color: var(--color-secondary-dark);
+}

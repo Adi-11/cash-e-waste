@@ -1,5 +1,6 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import { backendUrl } from "../../config";
+import AuthContext from "../Authentication/Auth.provider";
 import { ProductsReducer } from "./Product.reducer";
 
 export interface ProductStateType {
@@ -24,8 +25,8 @@ interface ProductsProviderProps {
 export const ProductsProvider: React.FC<ProductsProviderProps> = ({
   children,
 }) => {
+  const { token } = useContext(AuthContext);
   const [state, dispatch] = useReducer(ProductsReducer, initialState);
-
   const getAllProducts = async () => {
     dispatch({ type: "LOADING" });
     await fetch(`${backendUrl}/item`)
@@ -45,6 +46,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${token}`,
       },
       body: JSON.stringify(data),
     })
