@@ -2,10 +2,13 @@ import React from "react";
 import { FaTruckPickup } from "react-icons/fa";
 import Lottie from "react-lottie";
 import { Header } from "./Header";
+import { useNavigate } from "react-router-dom";
 
 interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = ({}) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Header />
@@ -16,7 +19,10 @@ export const Home: React.FC<HomeProps> = ({}) => {
             <p className="text-[2rem] font-semibold text-secondary-dark opacity-80">
               Convert your e-Waste to cryto coins
             </p>
-            <button className={"btn-schedule"}>
+            <button
+              className={"btn-schedule"}
+              onClick={() => navigate("/pickup")}
+            >
               Sechedule your pickup{" "}
               <FaTruckPickup size={20} className={"loader"} />
             </button>

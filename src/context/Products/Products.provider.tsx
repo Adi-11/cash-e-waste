@@ -52,8 +52,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log({ res });
-        dispatch({ type: "ADD_PRODUCT", payload: res.item });
+        dispatch({ type: "ADD_PRODUCT", payload: data });
       })
       .catch((err) => {
         console.log({ err });

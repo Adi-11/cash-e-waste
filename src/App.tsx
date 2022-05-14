@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "./context/Authentication/Auth.provider";
 import { ProductsProvider } from "./context/Products/Products.provider";
+import { OrderProvider } from "./context/UserOrderContext/Order.provider";
 import { WalletProvider } from "./context/Wallet/Wallet.provider";
 import { Routing } from "./Router/Routing";
 
@@ -14,7 +15,9 @@ function App() {
         <AuthProvider>
           <WalletProvider>
             <ProductsProvider>
-              <Routing />
+              <OrderProvider>
+                <Routing />
+              </OrderProvider>
             </ProductsProvider>
           </WalletProvider>
         </AuthProvider>
