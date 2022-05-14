@@ -74,12 +74,12 @@ export const Login: React.FC<LoginProps> = ({}) => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="shadow-2xl shadow-slate-500 rounded-md py-8 m-auto flex items-center justify-center w-3/4 login-bg">
+    <div className="lg:h-screen flex items-center justify-center">
+      <div className="shadow-2xl shadow-slate-500 rounded-md py-4 m-auto mb-4 mt-10 flex items-center flex-col-reverse lg:flex-row lg:py-8 justify-center w-3/4 login-bg">
         <div className="flex-[0.5] h-full rounded-tl-md rounded-bl-md p-4">
           <div
             className={
-              "flex items-center justify-center flex-col h-full w-3/4 m-auto"
+              "flex items-center justify-center flex-col h-full lg:w-3/4 md:w-3/4 w-full m-auto"
             }
           >
             <p className="text-accent mt-4 text-3xl font-extrabold ">
@@ -94,11 +94,11 @@ export const Login: React.FC<LoginProps> = ({}) => {
             />
           </div>
         </div>
-        <div className="flex-[0.5] p-4 relative">
+        <div className="flex-[0.5] p-4 relative w-full">
           <div className="w-full h-full">
             {forLogin ? (
               <div className="text-center">
-                <p className="font-bold text-secondary-dark text-2xl">
+                <p className="font-bold text-secondary-dark text-2xl w-full">
                   Welcome Back
                 </p>
                 <p className={"text-base opacity-80 text-semibold scale-90"}>
@@ -107,7 +107,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
               </div>
             ) : (
               <div className="text-center">
-                <p className="font-bold text-2xl text-secondary-dark">
+                <p className="font-bold text-2xl text-secondary-dark w-full">
                   Welcome to Cash-e-Waste
                 </p>
                 <p className={"text-base opacity-80 text-semibold scale-90"}>
@@ -116,7 +116,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
               </div>
             )}
 
-            <div className="m-auto w-3/4">
+            <div className="m-auto lg:w-3/4 md:w-3/4 w-full">
               <div
                 className={
                   "feild w-full flex items-start justify-center flex-col mb-6"
@@ -192,7 +192,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
             <div className="m-auto mt-6">
               <Divider variant="inset" sx={{ borderBottomWidth: 2 }} />
             </div>
-            <div className="m-auto w-3/4">
+            <div className="m-auto lg:w-3/4 md:w-3/4 w-full">
               <button
                 className={"btn-google"}
                 onClick={() => handleGoogleLogin()}

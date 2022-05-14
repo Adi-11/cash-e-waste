@@ -9,9 +9,9 @@ export const Home: React.FC<HomeProps> = ({}) => {
   return (
     <>
       <Header />
-      <div className="h-screen flex items-center justify-center px-14 ">
-        <div className="shadow-slate-500 rounded-md m-auto flex items-center justify-between">
-          <div className="flex-[0.5] h-full rounded-tl-md rounded-bl-md p-4">
+      <div className="h-screen flex items-center justify-center lg:px-14 md:p-8 sm:p-4">
+        <div className="shadow-slate-500 rounded-md m-auto flex items-center justify-between flex-col lg:flex-row">
+          <div className="flex-[0.5] text-center lg:text-left h-full rounded-tl-md rounded-bl-md p-4">
             <p className="text-[3rem] font-bold text-primary">Cash-e-Waste</p>
             <p className="text-[2rem] font-semibold text-secondary-dark opacity-80">
               Convert your e-Waste to cryto coins
