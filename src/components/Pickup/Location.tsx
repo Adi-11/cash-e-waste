@@ -4,8 +4,8 @@ import MapPicker from "react-google-map-picker";
 
 interface LocationProps {
   data: any;
-  handleGeolocation: any;
   handleInputChange: any;
+  handleGeolocation: any;
 }
 
 export const Location: React.FC<LocationProps> = ({
@@ -29,11 +29,9 @@ export const Location: React.FC<LocationProps> = ({
       spacing={{ xs: 2, md: 3 }}
       columns={{ xs: 4, sm: 8, md: 12 }}
     >
-      <Grid item sm={2} xs={12} md={12}>
+      <Grid item sm={12} xs={12} md={12}>
         <div
-          className={
-            "feild w-full flex items-start justify-center flex-col mb-2"
-          }
+          className={"feild w-full flex items-start justify-center flex-col"}
         >
           <div className={"w-4/5 mb-2"}>
             <p>Name</p>
@@ -51,11 +49,9 @@ export const Location: React.FC<LocationProps> = ({
           />
         </div>
       </Grid>
-      <Grid item sm={2} xs={12} md={12}>
+      <Grid item sm={12} xs={12} md={12}>
         <div
-          className={
-            "feild w-full flex items-start justify-center flex-col mb-2"
-          }
+          className={"feild w-full flex items-start justify-center flex-col"}
         >
           <div className={"w-4/5 mb-2"}>
             <p>Address</p>
@@ -73,11 +69,9 @@ export const Location: React.FC<LocationProps> = ({
           />
         </div>
       </Grid>
-      <Grid item sm={2} xs={12} md={4}>
+      <Grid item sm={12} xs={12} md={6}>
         <div
-          className={
-            "feild w-full flex items-start justify-center flex-col mb-2"
-          }
+          className={"feild w-full flex items-start justify-center flex-col"}
         >
           <div className={"w-4/5 mb-2"}>
             <p>City</p>
@@ -95,33 +89,29 @@ export const Location: React.FC<LocationProps> = ({
           />
         </div>
       </Grid>
-      <Grid item sm={2} xs={12} md={4}>
+      <Grid item sm={12} xs={12} md={6}>
         <div
-          className={
-            "feild w-full flex items-start justify-center flex-col mb-2"
-          }
+          className={"feild w-full flex items-start justify-center flex-col"}
         >
           <div className={"w-4/5 mb-2"}>
-            <p>Pincode</p>
+            <p>State</p>
           </div>
           <input
             className={
               "py-[10px] px-2 outline-none border border-black rounded-md text-black text-base w-full bg-transparent"
             }
-            type="number"
-            name="pincode"
-            placeholder="Pincode"
+            type="text"
+            name="state"
+            placeholder="State"
             required
             onChange={handleInputChange}
-            value={data.pincode}
+            value={data.state}
           />
         </div>
       </Grid>
-      <Grid item sm={2} xs={12} md={4}>
+      <Grid item sm={12} xs={12} md={6}>
         <div
-          className={
-            "feild w-full flex items-start justify-center flex-col mb-2"
-          }
+          className={"feild w-full flex items-start justify-center flex-col"}
         >
           <div className={"w-4/5 mb-2"}>
             <p>Country</p>
@@ -139,14 +129,34 @@ export const Location: React.FC<LocationProps> = ({
           />
         </div>
       </Grid>
+      <Grid item sm={12} xs={12} md={6}>
+        <div
+          className={"feild w-full flex items-start justify-center flex-col"}
+        >
+          <div className={"w-4/5 mb-2"}>
+            <p>Pincode</p>
+          </div>
+          <input
+            className={
+              "py-[10px] px-2 outline-none border border-black rounded-md text-black text-base w-full bg-transparent"
+            }
+            type="number"
+            name="pincode"
+            placeholder="Pincode"
+            required
+            onChange={handleInputChange}
+            value={data.pincode}
+          />
+        </div>
+      </Grid>
 
       <Grid item sm={12} xs={12} md={12}>
         <MapPicker
           defaultLocation={{
-            lat: data.geoLocation.coordinates[1],
-            lng: data.geoLocation.coordinates[0],
+            lat: data.coordinates[1],
+            lng: data.coordinates[0],
           }}
-          style={{ height: "50vh" }}
+          style={{ height: "30vh" }}
           mapTypeId={"roadmap" as any}
           zoom={zoom}
           onChangeLocation={handleChangeLocation}

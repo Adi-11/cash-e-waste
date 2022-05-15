@@ -54,7 +54,7 @@ export const SelectItem: React.FC<SelectItemProps> = ({
           className="bg-secondary rounded-md text-white text-sm p-1 mx-2"
           onClick={() => handleAddItem()}
         >
-          Add More
+          Save & Add More
         </button>
       </div>
       <div className="w-full flex items-center justify-center my-2">

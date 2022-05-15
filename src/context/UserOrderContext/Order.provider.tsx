@@ -1,3 +1,4 @@
+import { useSnackbar } from "notistack";
 import React, { createContext, useContext, useReducer } from "react";
 import { backendUrl } from "../../config";
 import AuthContext from "../Authentication/Auth.provider";
@@ -24,6 +25,7 @@ interface OrderProviderProps {
 export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
   const { token } = useContext(AuthContext);
   const [state, dispatch] = useReducer(OrderReducer, initialState);
+  const { enqueueSnackbar } = useSnackbar();
 
   const getAllOrders = async () => {
     dispatch({ type: "LOADING" });
@@ -56,6 +58,12 @@ export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
       .then((res) => res.json())
       .then((res) => {
         dispatch({ type: "ADD_ORDER", payload: res.order });
+        enqueueSnackbar(
+          "Order Placed Successfully! Our delivery partner will contact soon",
+          {
+            variant: "success",
+          }
+        );
       })
       .catch((err) => {
         console.log({ err });
