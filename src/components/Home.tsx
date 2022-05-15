@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaTruckPickup } from "react-icons/fa";
 import Lottie from "react-lottie";
 import { Header } from "./Header";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/Authentication/Auth.provider";
 
 interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = ({}) => {
+  const { token } = useContext<any>(AuthContext);
   const navigate = useNavigate();
 
   return (
@@ -21,7 +23,9 @@ export const Home: React.FC<HomeProps> = ({}) => {
             </p>
             <button
               className={"btn-schedule"}
-              onClick={() => navigate("/pickup")}
+              onClick={() => {
+                token === "" ? navigate("/login") : navigate("/pickup");
+              }}
             >
               Sechedule your pickup{" "}
               <FaTruckPickup size={20} className={"loader"} />

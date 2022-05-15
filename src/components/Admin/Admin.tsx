@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from "react";
+import AuthContext from "../../context/Authentication/Auth.provider";
 import ProductsContext from "../../context/Products/Products.provider";
 import { Header } from "../Header";
+import { useNavigate } from "react-router-dom";
 import styles from "../../styles/Admin.module.css";
 import { BiEdit } from "react-icons/bi";
 import { AddProduct } from "./AddProducts";
@@ -18,8 +20,16 @@ export const EWasteTypes = [
 ];
 
 export const Admin: React.FC<AdminProps> = ({}) => {
+  const { user, isAuthenticated } = useContext(AuthContext);
   const { loading, getAllProducts, getCompanies, products } =
     useContext<any>(ProductsContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated || user.permissions[0] !== "*") {
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     getAllProducts();
