@@ -17,7 +17,7 @@ export const Home: React.FC<HomeProps> = ({}) => {
           <div className="flex-[0.5] text-center lg:text-left h-full rounded-tl-md rounded-bl-md p-4">
             <p className="text-[3rem] font-bold text-primary">Cash-e-Waste</p>
             <p className="text-[2rem] font-semibold text-secondary-dark opacity-80">
-              Convert your e-Waste to cryto coins
+              Convert your e-Waste to crpyto coins
             </p>
             <button
               className={"btn-schedule"}
