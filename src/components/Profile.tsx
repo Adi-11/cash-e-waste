@@ -13,13 +13,17 @@ import { Header } from "./Header";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { BiImport } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import Orders from "./Orders";
+import WalletContext from "../context/Wallet/Wallet.provider";
 interface ProfileProps {}
 
 export const Profile: React.FC<ProfileProps> = ({}) => {
   const { getUserProfile, user, loading, token } = useContext<any>(AuthContext);
+  const { getBalance } = useContext<any>(WalletContext);
   const navigate = useNavigate();
   useEffect(() => {
     getUserProfile();
+    getBalance();
     console.log(user);
   }, []);
 
@@ -31,7 +35,7 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
           <CircularProgress size={50} color={"inherit"} className={"loader"} />
         </div>
       )}
-      {!user.wallet && (
+      {!user.wallet ? (
         <div className="flex flex-col justify-center items-center mt-44 opacity-80">
           <h3 className="text-2xl mb-5 font-extrabold">
             Hello {user.name}!!! New to Cash-e-waste?
@@ -89,6 +93,14 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
             </Card>
           </div>
         </div>
+      ) : (
+        <>
+          <div className="text-center m-2">
+            <Typography variant="h4">My Wallet</Typography>
+          </div>
+
+          <Orders />
+        </>
       )}
     </>
   );
