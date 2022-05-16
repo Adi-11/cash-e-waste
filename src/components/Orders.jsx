@@ -1,25 +1,25 @@
-import * as React from "react";
+import React, { useContext, useEffect } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import OrderProvider from "../context/UserOrderContext/Order.provider";
-import { CircularProgress, Grid } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import OrderItems from "./OrderItems";
 
 export default function Orders() {
-  const { getAllOrders, orders, loading } = React.useContext(OrderProvider);
-  React.useEffect(() => {
-    getAllOrders();
+  const { getAllOrders, orders, loading } = useContext(OrderProvider);
 
-    console.log(orders);
+  useEffect(() => {
+    getAllOrders();
   }, []);
+
   return (
     <div className="m-5">
       {loading ? (
         <>
-          <CircularProgress></CircularProgress>
+          <CircularProgress />
         </>
       ) : (
         <>
@@ -37,7 +37,7 @@ export default function Orders() {
                   <div className="flex flex-row justify-between w-full">
                     <Typography>
                       <span className="font-bold text-primary">
-                        Created on :
+                        Scheduled on :
                       </span>{" "}
                       {order.createdAt.substring(0, 10)}
                     </Typography>
@@ -63,32 +63,6 @@ export default function Orders() {
           })}
         </>
       )}
-      {/*  */}
-
-      {/* <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Accordion 2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion disabled>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-          id="panel3a-header"
-        >
-          <Typography>Disabled Accordion</Typography>
-        </AccordionSummary>
-      </Accordion> */}
     </div>
   );
 }

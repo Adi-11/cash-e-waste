@@ -107,7 +107,13 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
   };
 
   const getBalance = async () => {
-    await fetch(`${backendUrl}/users/balance`)
+    await fetch(`${backendUrl}/users/balance`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         if (res.error) {

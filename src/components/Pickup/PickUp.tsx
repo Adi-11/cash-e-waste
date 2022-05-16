@@ -100,7 +100,7 @@ export const PickUp: React.FC<PickUpProps> = ({}) => {
       },
     };
     console.log({ data });
-    // addOrder(data);
+    addOrder(data);
   };
 
   return (

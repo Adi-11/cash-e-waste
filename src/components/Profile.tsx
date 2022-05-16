@@ -15,6 +15,7 @@ import { BiImport } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Orders from "./Orders";
 import WalletContext from "../context/Wallet/Wallet.provider";
+import PhraseInputDialog from "./PhraseInputDialog";
 interface ProfileProps {}
 
 export const Profile: React.FC<ProfileProps> = ({}) => {
@@ -23,7 +24,9 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
   const navigate = useNavigate();
   useEffect(() => {
     getUserProfile();
-    getBalance();
+    if (user.wallet) {
+      getBalance();
+    }
     console.log(user);
   }, []);
 
@@ -86,9 +89,7 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button variant="contained" size="small">
-                  Import Exisitng Wallet
-                </Button>
+                <PhraseInputDialog />
               </CardActions>
             </Card>
           </div>
