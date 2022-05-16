@@ -114,6 +114,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
           throw new Error(res.message);
         } else {
           // do something with the balance
+          console.log({ res });
         }
       })
       .catch((err) => {
