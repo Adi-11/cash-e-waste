@@ -41,11 +41,11 @@ export default function PhraseInputDialog() {
 
   const handleSubmit = () => {
     console.log({ phrase });
-    // const phraseArray = phrase.split(" ");
-    // if (phraseArray.length !== 12) {
-    //   enqueueSnackbar("Please enter 12 words phrase", { variant: "error" });
-    //   return;
-    // }
+    const phraseArray = phrase.split(" ");
+    if (phraseArray.length !== 12) {
+      enqueueSnackbar("Please enter 12 words phrase", { variant: "error" });
+      return;
+    }
     connectToExistingWallet(phrase);
     navigate("/");
   };
