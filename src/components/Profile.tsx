@@ -117,7 +117,8 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
                     className="h-12 w-12 rounded-full"
                   />
                   <p className="font-bold text-2xl ml-4">
-                    your balance: {balance}
+                    Your Balance: {balance / 100000000000000000}
+                    <span className="text-base ml-0.5"> 5ire coins</span>
                   </p>
                 </div>
               </Paper>
