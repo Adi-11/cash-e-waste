@@ -6,8 +6,9 @@ import {
   Typography,
   Button,
   CardActions,
+  Paper,
 } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/Authentication/Auth.provider";
 import { Header } from "./Header";
 import { IoMdAddCircleOutline } from "react-icons/io";
@@ -22,18 +23,27 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
   const { getUserProfile, user, loading, token } = useContext<any>(AuthContext);
   const { getBalance } = useContext<any>(WalletContext);
   const navigate = useNavigate();
+  const [balance, setBalance] = useState<any>(0);
+  const [balLoader, setBalLoader] = useState<boolean>(true);
   useEffect(() => {
     getUserProfile();
     if (user.wallet) {
-      getBalance();
+      fetchBalance();
     }
     console.log(user);
   }, []);
 
+  const fetchBalance = async () => {
+    let balance = await getBalance();
+    console.log({ balance });
+    setBalance(Number(balance));
+    setBalLoader(false);
+  };
+
   return (
     <>
       <Header />
-      {loading && (
+      {(loading || balLoader) && (
         <div className=" flex items-center justify-center h-screen m-auto">
           <CircularProgress size={50} color={"inherit"} className={"loader"} />
         </div>
@@ -98,6 +108,20 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
         <>
           <div className="text-center m-2">
             <Typography variant="h4">My Wallet</Typography>
+            <div className="flex items-center justify-center">
+              <Paper className="p-4 w-1/2">
+                <div className="flex items-center justify-start">
+                  <img
+                    src="https://pbs.twimg.com/profile_images/1445722786073251843/LXRfx7Ty_400x400.jpg"
+                    alt="5ire"
+                    className="h-12 w-12 rounded-full"
+                  />
+                  <p className="font-bold text-2xl ml-4">
+                    your balance: {balance}
+                  </p>
+                </div>
+              </Paper>
+            </div>
           </div>
 
           <Orders />

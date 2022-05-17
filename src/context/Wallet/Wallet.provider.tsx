@@ -107,6 +107,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
   };
 
   const getBalance = async () => {
+    let balance: any = null;
     await fetch(`${backendUrl}/users/balance`, {
       method: "GET",
       headers: {
@@ -121,6 +122,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
         } else {
           // do something with the balance
           console.log({ res });
+          balance = res.wallet.balance;
         }
       })
       .catch((err) => {
@@ -129,6 +131,8 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
           autoHideDuration: 3000,
         });
       });
+
+    return balance;
   };
 
   return (
